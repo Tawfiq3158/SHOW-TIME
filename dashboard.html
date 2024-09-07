@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Ticket Booking</title>
+    <div><title>Movie Ticket Booking</title></div>
     <link rel="stylesheet" href="./color.css" >
 </head>
 <body>
     <div class="container">
-        <h1>Movie Ticket</h1>
+        <h1 class="title">Movie Ticket</h1>
         <form id="bookingForm">
             <label for="movie">Select Movie</label>
             <select id="movie" name="movie" required>
                 <option value="" disabled selected>Select a movie</option>
-                <option value="avengers">Avengers</option>
+                <option value="avengers-age-of-ultron">Avengers Age of Ultron</option>
                 <option value="deadpool-and-wolverine">Deadpool and Wolverine</option>
                 <option value="anonymous">Anonymous</option>
             </select>
@@ -24,10 +24,10 @@
                 <option value="10am">10:00 AM</option>
                 <option value="2pm">02:00 PM</option>
                 <option value="6pm">06:00 PM</option>
-                <option value="9pm">11:00 PM</option>
+                <option value="11pm">11:00 PM</option>
             </select>
             
-            <label for="name">Full Name</label>
+            <label for="name">Name</label>
             <input type="text" id="name" name="name" required>
             
             <label for="email">Email Address</label>
