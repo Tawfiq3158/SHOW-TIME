@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        /* variables */
+        :root {
+            --main-color: #ef160b;
+            --text-color: black;
+            --bg-color: #fff;
+        }
+
+        body {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 100px;
+            transition: 0.5s;
+            /*background-color: var(--text-color);*/
+        }
+        header.shadow{
+            background: var(--bg-color);
+            box-shadow: 0 0 4px rgb(14 55 54/15%);
+        }
+        header.shadow .navbar a{
+            color: var(--text-color);
+        }
+        header.shadow .logo{
+            color: var(--text-color);
+        }
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 600;
+            align-items: center;
+            color: var(--bg-color);
+            display: flex;
+            column-gap: 0.5rem;
+        }
+        .navbar{
+            display: flex;
+            column-gap: 5rem;
+        }
+        .navbar li{
+            position: relative;
+        }
+        .navbar a{
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--bg-color);
+        }
+        .navbar a::after{
+            content: '';
+            width: 0;
+            height: 2px;
+            background: var(--main-color);
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            transition: 0.4s all linear;
+        }
+        .navbar a:hover::after,
+        .navbar .home-active::after{
+            width: 100%;
+        }
+
+        .booking-container {
+            margin-top: 50px; /* Space for fixed header */
+            background-color: black;
+            border-radius: 5px;
+            padding: 0px;
+            box-shadow: 0 0 100pxrgba(0,0,0,0.1);
+            text-align: center; /* Center content */
+        }
+        .textColor {
+            color: white;
+        }
+        .screen {
+            width: 100%;
+            height: 50px;
+            background-color: var(--main-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .seat-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: gray;
+            border-radius: 50px;
+        }
+
+        .seat-row {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0; /* Space between rows */
+        }
+
+        .seat {
+            width: 30px;
+            height: 30px;
+            margin: 5px; /* Space between seats */
+            border: 1px solid #555;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: black;
+            transition: background-color 0.3s;
+        }
+
+        .seat.available {
+            background-color: white; /* Available seat color */
+        }
+
+        .seat.selected {
+            background-color: green; /* Selected seat color */
+            color: white;
+        }
+
+        .seat.booked {
+            background-color: #dc3545; /* Booked seat color */
+            cursor: not-allowed;
+        }
+
+        .gap {
+            width: 20px; /* Adjust the gap width as needed */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center; /* Centers the button horizontally */
+            margin-top: 20px; /* Optional, for spacing */
+        }
+        #checkoutBtn {
+            padding: 10px 20px;
+            background-color: var(--main-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background 0.3s;
+            display: inline-block; /* Allow margin auto to work */
+        }
+
+        #checkoutBtn:hover {
+            background-color: #fa1216; /* Darker shade on hover */
+        }
+
+        .cost-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .cost-container p {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: red;
+        }
+        #ticket {
+            display: none;
+            margin: 20px;
+            padding: 20px;
+            background: var(--bg-color);
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div href="#home" class="logo">
+            <i class="bx bx-camera-film"></i> Seat Selection
+        </div>
+        <ul class="navbar">
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </header>
+    
+    <div class="booking-container">
+        
+        <div class="screen">Screen</div>
+
+        <div class="seat-selection">
+            <div class="tex">Select the seats</div>
+            <!-- Cinema-style rows with gaps -->
+            <div class="seat-row">
+                <div class="seat available" onclick="toggleSeat(this)">1</div>
+                <div class="seat available" onclick="toggleSeat(this)">2</div>
+                <div class="seat available" onclick="toggleSeat(this)">3</div>
+                <div class="seat available" onclick="toggleSeat(this)">4</div>
+                <div class="seat available" onclick="toggleSeat(this)">5</div>
+                <div class="gap"></div> <!-- Gap after 5 seats -->
+                <div class="seat available" onclick="toggleSeat(this)">6</div>
+                <div class="seat available" onclick="toggleSeat(this)">7</div>
+                <div class="seat available" onclick="toggleSeat(this)">8</div>
+                <div class="seat available" onclick="toggleSeat(this)">9</div>
+                <div class="seat available" onclick="toggleSeat(this)">10</div>
+            </div>
+            <div class="seat-row">
+                <div class="seat available" onclick="toggleSeat(this)">1</div>
+                <div class="seat available" onclick="toggleSeat(this)">2</div>
+                <div class="seat available" onclick="toggleSeat(this)">3</div>
+                <div class="seat available" onclick="toggleSeat(this)">4</div>
+                <div class="seat available" onclick="toggleSeat(this)">5</div>
+                <div class="gap"></div> <!-- Gap after 5 seats -->
+                <div class="seat available" onclick="toggleSeat(this)">6</div>
+                <div class="seat available" onclick="toggleSeat(this)">7</div>
+                <div class="seat available" onclick="toggleSeat(this)">8</div>
+                <div class="seat available" onclick="toggleSeat(this)">9</div>
+                <div class="seat available" onclick="toggleSeat(this)">10</div>
+            </div>
+            <div class="seat-row">
+                <div class="seat available" onclick="toggleSeat(this)">11</div>
+                <div class="seat available" onclick="toggleSeat(this)">12</div>
+                <div class="seat available" onclick="toggleSeat(this)">13</div>
+                <div class="seat available" onclick="toggleSeat(this)">14</div>
+                <div class="seat available" onclick="toggleSeat(this)">15</div>
+                <div class="gap"></div> <!-- Gap after 5 seats -->
+                <div class="seat available" onclick="toggleSeat(this)">16</div>
+                <div class="seat available" onclick="toggleSeat(this)">17</div>
+                <div class="seat available" onclick="toggleSeat(this)">18</div>
+                <div class="seat available" onclick="toggleSeat(this)">19</div>
+                <div class="seat available" onclick="toggleSeat(this)">20</div>
+            </div>
+            <div class="seat-row">
+                <div class="seat available" onclick="toggleSeat(this)">21</div>
+                <div class="seat available" onclick="toggleSeat(this)">22</div>
+                <div class="seat available" onclick="toggleSeat(this)">23</div>
+                <div class="seat available" onclick="toggleSeat(this)">24</div>
+                <div class="seat available" onclick="toggleSeat(this)">25</div>
+                <div class="gap"></div> <!-- Gap after 5 seats -->
+                <div class="seat available" onclick="toggleSeat(this)">26</div>
+                <div class="seat available" onclick="toggleSeat(this)">27</div>
+                <div class="seat available" onclick="toggleSeat(this)">28</div>
+                <div class="seat available" onclick="toggleSeat(this)">29</div>
+                <div class="seat available" onclick="toggleSeat(this)">30</div>
+            </div>
+            <div class="seat-row">
+                <div class="seat available" onclick="toggleSeat(this)">31</div>
+                <div class="seat available" onclick="toggleSeat(this)">32</div>
+                <div class="seat available" onclick="toggleSeat(this)">33</div>
+                <div class="seat available" onclick="toggleSeat(this)">34</div>
+                <div class="seat available" onclick="toggleSeat(this)">35</div>
+                <div class="gap"></div> <!-- Gap after 5 seats -->
+                <div class="seat available" onclick="toggleSeat(this)">36</div>
+                <div class="seat available" onclick="toggleSeat(this)">37</div>
+                <div class="seat available" onclick="toggleSeat(this)">38</div>
+                <div class="seat available" onclick="toggleSeat(this)">39</div>
+                <div class="seat available" onclick="toggleSeat(this)">40</div>
+            </div>
+            <div class="seat-row">
+                <div class="seat available" onclick="toggleSeat(this)">41</div>
+                <div class="seat available" onclick="toggleSeat(this)">42</div>
+                <div class="seat available" onclick="toggleSeat(this)">43</div>
+                <div class="seat available" onclick="toggleSeat(this)">44</div>
+                <div class="seat available" onclick="toggleSeat(this)">45</div>
+                <div class="gap"></div> <!-- Gap after 5 seats -->
+                <div class="seat available" onclick="toggleSeat(this)">46</div>
+                <div class="seat available" onclick="toggleSeat(this)">47</div>
+                <div class="seat available" onclick="toggleSeat(this)">48</div>
+                <div class="seat available" onclick="toggleSeat(this)">49</div>
+                <div class="seat available" onclick="toggleSeat(this)">50</div>
+            </div>
+            <!-- Add more rows as needed -->
+        </div>
+
+        <div class="cost-container">
+            <p>Movie Ticket Price: <span id="ticketPrice">$0</span></p>
+            <p>Total Cost: <span id="totalCost">$0</span></p>
+        </div>
+        <div class="button-container">
+        <button id="checkoutBtn">Pay Now</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        const move = {
+            1: {
+                title: "Dr. Strange In The Multiverse Of Madness",
+                price: 88.00
+            },
+            2: {
+                title: "Pathaan",
+                price: 54.00
+            },
+            3: {
+                title: "Batman vs Superman",
+                price: 78.00
+            },
+            4: {
+                title: "John Wick 2",
+                price: 77.00
+            },
+            5: {
+                title: "Aquaman",
+                price: 60.00
+            },
+            6: {
+                title: "Black Panther",
+                price: 68.00
+            },
+            7: {
+                title: "Uncharted",
+                price: 55.00
+            },
+            8: {
+                title: "Brahmastra",
+                price: 88.00
+            },
+            9: {
+                title: "Mortal Engines",
+                price: 15.00
+            },
+            10: {
+                title: "Underworld: Blood Wars",
+                price: 25.00
+            },
+            11: {
+                title: "Guardians of the Galaxy",
+                price: 59.00
+            },
+            12: {
+                title: "Thor: Love and Thunder",
+                price: 60.00
+            },
+            13: {
+                title: "Spider-Man No Way Home",
+                price: 80.00
+            },
+            14: {
+                title: "Avengers: End Game",
+                price: 100.00
+            }
+        };                                
+        const param = new URLSearchParams(window.location.search);
+        const movieid = param.get('movieId');
+        const movie = move[movieid];
+        const price = movie.price;
+        if (movie) { 
+            
+            document.getElementById('ticketPrice').textContent = `$${price.toFixed(2)}`;
+        } else {
+            console.error('Movie not found');
+            document.getElementById('ticketPrice').textContent = 'Movie not found';
+        }
+    
+        let selectedSeats = 0;
+        const selectedSeatNumbers = [];
+        
+        function toggleSeat(seat) {  
+            if (seat.classList.contains('booked')) {  
+                return; // Do nothing if the seat is booked  
+            }  
+            
+            seat.classList.toggle('selected'); // Toggle the selected state  
+            
+            // Update selected seat count  
+            if (seat.classList.contains('selected')) {  
+                selectedSeats++;  
+                selectedSeatNumbers.push(seat.textContent);
+            } else {  
+                selectedSeats--;  
+                const index = selectedSeatNumbers.indexOf(seat.textContent);
+                if (index > -1) {
+                    selectedSeatNumbers.splice(index, 1); // Remove seat number
+                }
+            }  
+            
+            // Update total cost  
+            const totalCost = selectedSeats * price;  
+            document.getElementById('totalCost').textContent = `$${totalCost.toFixed(2)}`;
+        }
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (selectedSeats > 0){
+
+                // Construct the URL with parameters
+                const theater = param.get('theater');
+                const time = param.get('time');
+                const totalSeats = selectedSeats;
+                
+                const url = `payment.html?movieId=${movieid}&theater=${theater}&time=${time}&seats=${selectedSeatNumbers.join(',')}&totalSeats=${totalSeats}`;
+                
+                window.location.href = url;
+                
+                
+            }else{
+                alert('Please select at least one seat.');
+            }
+        });
+
+        // Sticky header effect when scrolling
+        window.onscroll = function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        };
+
+    </script>
+</body>
+</html>

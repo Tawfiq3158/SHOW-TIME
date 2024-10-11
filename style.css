@@ -1,0 +1,418 @@
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    scroll-padding-top: 2rem;
+    scroll-behavior: smooth;
+}
+/* variables  */
+:root{
+    --main-color: #ff2c1f;
+    --text-color: #020307;
+    --bg-color: #fff;
+}
+
+body{
+    background: var(--text-color);
+    color: var(--bg-color);
+}
+header{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 100px;
+    transition: 0.5s;
+    /* background: var(--main-color); */
+}
+header.shadow{
+    background: var(--bg-color);
+    box-shadow: 0 0 4px rgb(14 55 54/15%);
+}
+header.shadow .navbar a{
+    color: var(--text-color);
+}
+header.shadow .logo{
+    color: var(--text-color);
+}
+
+
+.logo{
+    font-size: 1.1rem;
+    font-weight: 600;
+    align-items: center;
+    color: var(--bg-color);
+    display: flex;
+    column-gap: 0.5rem;
+}
+.bx{
+    color: var(--main-color);
+}
+.navbar{
+    display: flex;
+    column-gap: 5rem;
+}
+.navbar li{
+    position: relative;
+}
+.navbar a{
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--bg-color);
+}
+.navbar a::after{
+    content: '';
+    width: 0;
+    height: 2px;
+    background: var(--main-color);
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    transition: 0.4s all linear;
+}
+.navbar a:hover::after,
+.navbar .home-active::after{
+    width: 100%;
+}
+#menu-icon{
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000001;
+    display: none;
+}
+.btn{
+    padding: 0.7rem 1.4rem;
+    background: var(--main-color);
+    color: var(--bg-color);
+    font-weight: 400;
+    border-radius: 0.5rem;
+}
+.btn:hover{
+    background: #fa1216;
+}
+
+/* Home  */
+section{
+    padding: 4.5rem 0 1.5rem;
+}
+.container{
+    width: 100%;
+    min-height: 640px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgb(2, 3, 7,0.5);
+}
+.container img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: -1;
+}
+.swiper-pagination-bullet{
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 0.2rem !important;
+    background: var(--bg-color) !important;
+    opacity: 1 !important;
+}
+.swiper-pagination-bullet-active{
+    width: 1.5rem !important;
+    background: var(--main-color) !important;
+}
+.home-text{
+    z-index: 1000;
+    padding: 0 150px;
+}
+.home-text span{
+    color: var(--bg-color);
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.home-text h1{
+    color: var(--bg-color);
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+/* movies  */
+.heading{
+    max-width: 968px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--main-color);
+}
+/* Movies Container */
+.movies-container {
+    max-width: 968px;           /* Consistent max-width */
+    margin: 0 auto;            /* Center container */
+    display: grid;             /* Use grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive columns */
+    gap: 1rem;                 /* Space between grid items */
+    margin-top: 2rem;          /* Top margin */
+}
+.box {
+    display: block;           /* Make box display as a block element */
+    text-align: center;      /* Center text inside boxes */
+    text-decoration: none;    /* Remove underline from links */
+    color: inherit;          /* Inherit text color */
+}
+
+.box .box-img {
+    width: 100%;               /* Full width */
+    height: 270px;            /* Fixed height */
+    overflow: hidden;          /* Hide overflow */
+    cursor: pointer;           /* Pointer cursor on hover */
+}
+
+.box .box-img img {
+    width: 100%;               /* Full width of box */
+    height: 100%;              /* Full height of box */
+    object-fit: cover;         /* Cover the entire area */
+    transition: transform 0.2s;/* Smooth transition for hover effect */
+}
+
+.box .box-img img:hover {
+    transform: scale(1.05);    /* Scale up slightly on hover */
+}
+
+.box h3 {
+    font-size: 0.9rem;         /* Title font size */
+    font-weight: 500;          /* Title font weight */
+}
+
+.box span {
+    font-size: 14px;           /* Subtitle font size */
+}
+
+
+/* coming container  */
+.coming-container{
+    display: grid;
+    gap: 1rem;
+    max-width: 968px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+}
+.coming-container .box img:hover{
+    transform: translateY(0);
+}
+.coming-container .box img{
+    border-radius: 15px;
+}
+
+/* newsletter  */
+.newsletter{
+    max-width: 968px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 2rem;
+}
+.newsletter h2{
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.newsletter form{
+    background: var(--bg-color);
+    padding: 10px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+.newsletter form input{
+    border: none;
+    outline: none;
+}
+.email{
+    width: 280px;
+}
+.newsletter form input::placeholder{
+    color: var(--text-color);
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+.newsletter .btn{
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* footer  */
+.footer{
+    max-width: 968px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.social{
+    display: flex;
+    align-items: center;
+    column-gap: 0.5rem;
+}
+.social .bx{
+    background: var(--bg-color);
+    padding: 2px;
+    font-size: 2rem;
+    border-radius: 50%;
+    border: 4px solid rgb(2, 3, 7,0.4);
+    color: var(--main-color);
+}
+.social .bx:hover{
+    background: var(--main-color);
+    color: var(--bg-color);
+    transition: 0.2s all linear;
+}
+
+.copyright{
+    padding: 20px;
+    text-align: center;
+    color: var(--bg-color);
+}
+.come{
+    display: flex;                /* Enables flexbox */
+    justify-content: center;      /* Centers items horizontally */
+    align-items: center;          /* Centers items vertically (if container has height) */
+}
+/* movie details */
+.movie-details {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+}
+.movie-details img {
+    width: 80%; /* Decrease the width to 80% of the container */
+    max-width: 400px; /* Set a maximum width */
+    height: auto; /* Maintain the aspect ratio */
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.movie-details div {
+    margin-bottom: 15px; /* Adds space between each dropdown box and button */
+}
+
+.movie-details label {
+    display: inline-block;
+    width: 150px; /* Adjust the width as per your design */
+}
+
+.movie-details select {
+    display: inline-block;
+    width: 200px; /* Adjust the width of the dropdown box */
+    margin-left: 10px; /* Space between label and dropdown */
+}
+
+.movie-details div:last-child {
+    display: flex;
+    justify-content: center; /* Center the button */
+    margin-top: 20px; /* Space above the button */
+}
+
+.movie-details button {
+    margin-top: 10px; /* Space above the "Book Now" button */
+    display: block; /* Ensure the button appears on a new line */
+    
+}
+
+
+#book-now {
+    background-color: #dc3545; /* Red background */
+    color: white; /* Black text */
+    padding: 10px 20px; /* Adjust padding for better appearance */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-weight: bold; /* Make the text bold */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+#book-now:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+.booking-container {
+    max-width: 600px;
+    margin: 50px auto;
+    text-align: center;
+
+}
+
+tex {
+    color: red;
+}
+.button-container {
+    display: flex;               /* Enables flexbox */
+    justify-content: center;     /* Centers items horizontally */
+    align-items: center;         /* Centers items vertically */
+    height: 10vh;              /* Full height of the viewport */
+    margin-top: 20px;           /* Space above the container */
+}
+button{
+    display: inline-block; /* Button styling */
+    padding: 10px 20px; /* Padding inside the button */
+    font-size: 18px; /* Font size for button text */
+    color: #fff; /* White text color */
+    background-color: red; /* Bootstrap's success color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners for the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin-top: 20px; /* Space above button */
+    width: 100%; /* Full width to help centering */
+    max-width: 200px; /* Max width for the button */
+}
+/* seat seletion */
+.seat-selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.seat {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    background-color: #28a745; /* Available seat color */
+    border: 1px solid #555;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #fff;
+}
+
+.seat.selected {
+    background-color: #007bff; /* Selected seat color */
+}
+
+.seat.booked {
+    background-color: #dc3545; /* Booked seat color */
+    cursor: not-allowed;
+}
+
+.cost {
+    margin-top: 20px;
+}

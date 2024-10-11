@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px -10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .log {
+            text-align: center;
+        }
+        button {
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <div class="log">
+        <button type="submit">Login</button>
+        </div>
+    </form>
+    <p>Don't have an account? <a href="sign-up.html">sign up here</a></p>
+    <p id="loginError" style="color: red;"></p>
+</div>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Get user input
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+
+        // Retrieve user details from localStorage
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+
+        // Check if the credentials are valid
+        if (users[username] && users[username] === password) {
+            // Store login status in localStorage
+            localStorage.setItem('loggedInUser', username);
+            
+            alert("Login successful!");
+            window.location.href = 'index.html'; // Redirect to index page
+        } else {
+            document.getElementById('loginError').innerText = "Invalid username or password.";
+        }
+    });
+</script>
+
+</body>
+</html>

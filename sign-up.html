@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px -10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .sign {
+            text-align: center;
+        }
+        button {
+            padding: 10px;
+            background-color: red;
+            color: white;
+            border: 2px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Sign Up</h2>
+    <form id="signUpForm">
+        <input type="text" id="signupUsername" placeholder="Username" required>
+        <input type="password" id="signupPassword" placeholder="Password" required>
+        <div class="sign">
+        <button type="submit">Sign Up</button>
+        </div>
+    </form>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+    <p id="signupError" style="color: red;"></p>
+</div>
+
+<script>
+    document.getElementById('signUpForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+
+        // Get user input
+        const username = document.getElementById('signupUsername').value;
+        const password = document.getElementById('signupPassword').value;
+
+        // Check if user already exists
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+        if (users[username]) {
+            document.getElementById('signupError').innerText = "Username already exists.";
+        } else {
+            // Store user details in localStorage
+            users[username] = password; // Storing username as key and password as value
+            localStorage.setItem('users', JSON.stringify(users));
+            alert("Sign-up successful! You can now log in.");
+            window.location.href = 'login.html'; // Redirect to login page
+        }
+    });
+</script>
+
+</body>
+</html>

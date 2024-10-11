@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+
+    <style>
+        /* Reset some default browser styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black; /* Dark background */
+        }
+
+        .payment-details {
+            max-width: 600px; /* Max width for the payment container */
+            margin: 50px auto; /* Centered horizontally and vertically */
+            padding: 20px;
+            background-color: #fff; /* White background for the payment container */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between content and image */
+            align-items: center; /* Center vertically */
+        }
+
+        .payment-info {
+            flex: 1; /* Take up remaining space */
+            margin-right: 20px; /* Space between text and image */
+        }
+
+        h1 {
+            color: #333; /* Darker color for the heading */
+            margin-bottom: 20px; /* Spacing below the heading */
+            font-size: 24px; /* Font size for the heading */
+        }
+
+        p {
+            font-size: 18px; /* Font size for paragraphs */
+            color: #555; /* Slightly lighter color for the text */
+            margin: 10px 0; /* Margin above and below paragraphs */
+        }
+
+        button {
+            display: inline-block; /* Button styling */
+            padding: 10px 20px; /* Padding inside the button */
+            font-size: 18px; /* Font size for button text */
+            color: #fff; /* White text color */
+            background-color: #28a745; /* Bootstrap's success color */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners for the button */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
+            margin-top: 20px; /* Space above button */
+            width: 100%; /* Full width to help centering */
+            max-width: 200px; /* Max width for the button */
+        }
+
+        button:hover {
+            background-color: #218838; /* Darker shade on hover */
+        }
+
+        img {
+            max-width: 100px; /* Limit image size */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        @media (max-width: 600px) {
+            /* Responsive adjustments for smaller screens */
+            .payment-details {
+                flex-direction: column; /* Stack items vertically */
+                align-items: center; /* Center items */
+                width: 90%; /* Use more width on smaller screens */
+            }
+
+            .payment-info {
+                margin-right: 0; /* Remove right margin */
+                text-align: center; /* Center text */
+            }
+
+            img {
+                margin-top: 20px; /* Space above image */
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="payment-details">
+        <div class="payment-info"></div> <!-- Container for displaying payment information -->
+        <img id="movie-poster" src="" alt="Movie Poster"> <!-- Image placeholder -->
+    </div>
+
+    <script>
+        // Get the URL parameters
+        const params = new URLSearchParams(window.location.search);
+        const movieId = params.get('movieId');
+        const theater = params.get('theater');
+        const time = params.get('time');
+        const seats = params.get('seats'); // Assume seats are passed as a parameter
+
+        // Sample movie data (you can fetch this from an API or database)
+        const movies = {
+            1: {
+                title: "Dr. Strange In The Multiverse Of Madness",
+                price: 88.00,
+                image: "./img/m1.jpg"
+            },
+            2: {
+                title: "Pathaan",
+                price: 54.00,
+                image: "./img/m2.jpg"
+            },
+            3: {
+                title: "Batman vs Superman",
+                price: 78.00,
+                image: "./img/m3.jpg"
+            },
+            4: {
+                title: "John Wick 2",
+                price: 77.00,
+                image: "./img/m4.jpg"
+            },
+            5: {
+                title: "Aquaman",
+                price: 60.00,
+                image: "./img/m5.jpg"
+            },
+            6: {
+                title: "Black Panther",
+                price: 68.00,
+                image: "./img/m6.jpg"
+            },
+            7: {
+                title: "Uncharted",
+                price: 55.00,
+                image: "./img/m7.jpg"
+            },
+            8: {
+                title: "Brahmastra",
+                price: 88.00,
+                image: "./img/m8.jpg"
+            },
+            9: {
+                title: "Mortal Engines",
+                price: 15.00,
+                image: "./img/m9.jpg"
+            },
+            10: {
+                title: "Underworld: Blood Wars",
+                price: 25.00,
+                image: "./img/m10.jpg"
+            },
+            11: {
+                title: "Guardians of the Galaxy",
+                image: "./img/home1.jpg",
+                price: 59.00
+            },
+            12: {
+                title: "Thor: Love and Thunder",
+                image: "./img/home2.png",
+                price: 60.00
+            },
+            13: {
+                title: "Spider-Man No Way Home",
+                image: "./img/home3.jpg",
+                price: 80.00
+            },
+            14: {
+                title: "Avengers: End Game",
+                image: "./img/home4.png",
+                price: 100.00
+            }
+        };                                
+
+        const paymentInfo = document.querySelector('.payment-info');
+
+        if (movieId && movies[movieId]) {
+            const movie = movies[movieId];
+            const totalPrice = movie.price * (seats ? seats.split(',').length : 1); // Calculate total price
+
+            paymentInfo.innerHTML = `
+                <h1>Payment Details</h1>
+                <p>Movie: ${movie.title}</p>
+                <p>Theater: ${theater}</p>
+                <p>Show Time: ${time}</p>
+                <p>Seats: ${seats}</p>
+                <p>Total Price: $${totalPrice.toFixed(2)}</p>
+                <button id="confirm-payment" class="pay">Confirm Payment</button>
+            `;
+
+            // Set the movie poster image
+            document.getElementById('movie-poster').src = movie.image;
+
+            // Add event listener for the payment confirmation button
+            document.getElementById('confirm-payment').addEventListener('click', function() {
+                alert('Payment Successful! Thank you for your purchase.');
+                // Redirect to a confirmation page or back to home
+                window.location.href = 'index.html'; // Change this to your desired page
+            });
+        } else {
+            paymentInfo.innerHTML = '<p>Invalid booking details. Please try again.</p>';
+        }
+    </script>
+</body>
+</html>
