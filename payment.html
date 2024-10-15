@@ -201,19 +201,40 @@
             function generatePDF() {
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF();
-                        
-                // Add the movie poster image
-                pdf.addImage(movie.image, 'JPEG', 20, 20, 50, 50); 
-                pdf.setFontSize(16);
-                pdf.text("Ticket Confirmation", 20, 80);
+
+                // Background for ticket
+                pdf.setFillColor(245, 245, 245); // Light gray background
+                pdf.rect(0, 0, 210, 297, 'F');
+
+                // Header section
+                pdf.setFillColor(0, 102, 204); // Blue background
+                pdf.rect(10, 10, 190, 30, 'F');
+                pdf.setFontSize(18);
+                pdf.setTextColor(255, 255, 255); // White text
+                pdf.text("MOVIE TICKET", 15, 30);
+
+                // Movie poster image
+                pdf.addImage(movie.image, 'JPEG', 150, 45, 45, 60);
+
+                // Ticket content section
+                pdf.setFillColor(255, 255, 255); // White background
+                pdf.rect(10, 50, 130, 70, 'F');
+
+                pdf.setFontSize(14);
+                pdf.setTextColor(0, 0, 0);
+                pdf.text(`Movie: ${movie.title}`, 15, 65);
+                pdf.text(`Theater: ${theater}`, 15, 75);
+                pdf.text(`Show Time: ${time}`, 15, 85);
+                pdf.text(`Seats: ${seats}`, 15, 95);
+                pdf.text(`Total Price: $${totalPrice.toFixed(2)}`, 15, 105);
+
+                // Footer section
+                pdf.setFillColor(0, 102, 204); // Blue background for footer
+                pdf.rect(10, 130, 190, 20, 'F');
                 pdf.setFontSize(12);
-                pdf.text(`Movie: ${movie.title}`, 20, 90);
-                pdf.text(`Theater: ${theater}`, 20, 100);
-                pdf.text(`Show Time: ${time}`, 20, 110);
-                pdf.text(`Seats: ${seats}`, 20, 120);
-                pdf.text(`Total Price: $${totalPrice.toFixed(2)}`, 20, 130);
-                        
-                // Save the PDF
+                pdf.setTextColor(255, 255, 255); // White text
+                pdf.text("Enjoy your movie! Please present this ticket at the entrance.", 15, 142);
+
                 pdf.save(`${movie.title}_Ticket.pdf`);
             }
 
