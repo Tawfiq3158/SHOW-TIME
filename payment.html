@@ -94,6 +94,8 @@
         <img id="movie-poster" src="" alt="Movie Poster"> <!-- Image placeholder -->
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script>
         // Get the URL parameters
         const params = new URLSearchParams(window.location.search);
@@ -102,6 +104,7 @@
         const time = params.get('time');
         const seats = params.get('seats'); // Assume seats are passed as a parameter
 
+        
         // Sample movie data (you can fetch this from an API or database)
         const movies = {
             1: {
@@ -195,9 +198,29 @@
             // Set the movie poster image
             document.getElementById('movie-poster').src = movie.image;
 
+            function generatePDF() {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+                        
+                // Add the movie poster image
+                pdf.addImage(movie.image, 'JPEG', 20, 20, 50, 50); 
+                pdf.setFontSize(16);
+                pdf.text("Ticket Confirmation", 20, 80);
+                pdf.setFontSize(12);
+                pdf.text(`Movie: ${movie.title}`, 20, 90);
+                pdf.text(`Theater: ${theater}`, 20, 100);
+                pdf.text(`Show Time: ${time}`, 20, 110);
+                pdf.text(`Seats: ${seats}`, 20, 120);
+                pdf.text(`Total Price: $${totalPrice.toFixed(2)}`, 20, 130);
+                        
+                // Save the PDF
+                pdf.save(`${movie.title}_Ticket.pdf`);
+            }
+
             // Add event listener for the payment confirmation button
             document.getElementById('confirm-payment').addEventListener('click', function() {
                 alert('Payment Successful! Thank you for your purchase.');
+                generatePDF();
                 // Redirect to a confirmation page or back to home
                 window.location.href = 'index.html'; // Change this to your desired page
             });
